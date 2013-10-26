@@ -1,0 +1,56 @@
+<main>
+
+
+<sidebar>
+
+<h2>{{agendaName}}</h2><br />
+
+{{#topics}} 
+{{topicNumber}} {{topicTitle}}
+{{/topics}}
+
+</sidebar>
+
+<content>
+<div id="agendaTitle">
+<h1>{{title}}</h1>
+</div>
+ 
+
+<div id="centerContent">
+
+<leftContent>
+<h2>{{topicTitle}}</h2>
+<div id="voteContent">
+	<div id="voteCluster">
+		<div id="voteRight">
+		<div id="voteBody">{{topicContent}}</div> 
+		<div id="voteDetail">{{topicDetail}}</div>
+		</div>
+		<div id="voteRight">
+		<div id="voteUp">{{voteUp}}</div> 
+		<div id="voteDown">{{voteDown}}</div>
+		</div>
+		</div>
+	<div id="commentLatest">
+	<h3><i>Lastest comment</i></h3><br />
+		{{commentLatest}}<br />
+		<div id="commentPlacard">{{commentFirstName}} {{commentLastName}}<br />{{commentCompany}}
+		</div>
+	</div>
+</div>
+	<div id="statsContent"></div>
+	<div id="chartsContent"></div>
+	<div id="commentsConent"></div>
+</leftContent>
+<rightContent>
+
+<ul><li>Vote</li><li>Stats</li><li>Charts</li><li>Comments</li></ul>
+</rightContent>
+
+</div>
+
+</content>
+
+
+</main>

@@ -1,4 +1,3 @@
-saepta
-======
+## Introduction
 
-Proper agenda/committee polling application
+Description of your project here.

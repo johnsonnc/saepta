@@ -1,0 +1,39 @@
+<div class="container">
+<div id="header">
+<div id="title"><h1>{{title}}</h1></div><div id="user"><div id="userImg">{{userPicture}}</div><div id="userId">{{firstName}} {{lastName}}<br />{{company}}</div></div>
+</div>
+ 
+<div id="main">
+
+<div id="sidebar">
+<h2>{{agendaName}}</h2><br />
+
+{{#topics}} 
+{{topicNumber}} {{topicTitle}}
+{{/topics}}
+</div>
+
+<div id="content">
+<div id="center">
+<div id="centerHeader">
+<ul><li>Vote</li><li>Stats</li><li>Charts</li><li>Comments</li></ul>
+</div>
+<div id="voteContent">
+	<div id="voteCluster"><div id="voteBody">{{topicContent}}<div> <div id="voteUp">{{voteUp}}</div> <div id="voteDown">{{voteDown}}</div></div>
+	<div id="commentLatest">
+	{{commentLatest}}<br /><div id="commentPlacard">{{commentFirstName}} {{commentLastName}}<br />{{commentCompany}}</div>
+	</div>
+</div>
+<div id="statsContent"></div>
+<div id="chartsContent"></div>
+<div id="commentsConent"></div>
+</div>
+</div>
+
+</div>
+
+<div id="footer">
+{{appTitle}} - {{version}} - Running on {{serverName}}
+</div>
+
+</div>
