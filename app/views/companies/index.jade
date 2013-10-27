@@ -1,0 +1,37 @@
+extends ../layouts/default
+
+block main
+  h1= title
+
+block content
+  - if (companies.length)
+    - each company in companies
+      .company
+        h3
+          a(href='/companies/'+company._id, title=company.title) #{company.title}
+        p= company.body
+
+        .meta.muted
+          span= formatDate(company.createdAt)
+          &nbsp; - &nbsp;
+          - if (company.user)
+            span Author &nbsp;
+
+            - var name = company.user.name ? company.user.name : company.user.username
+
+            a(href="/users/"+company.user._id)= name
+          &nbsp; - &nbsp;
+          - if (company.tags)
+            - each tag in company.tags.split(',')
+              &nbsp;
+              a.tag(href="/tags/"+tag)
+                i.icon-tags
+                |  #{tag}
+
+    - if (pages > 1)
+      .pagination
+        ul
+          != createPagination(pages, page)
+  - else
+    p.muted No companies.&nbsp;
+      a(href="/companies/new") create one
