@@ -52,6 +52,7 @@ var mongoose = require('mongoose'),
    */
 
   exports.new = function(req, res) {
+
     res.render('meetings/new', {
       title: 'New Meeting',
       meeting: new Meeting({})
@@ -134,3 +135,33 @@ var mongoose = require('mongoose'),
       res.redirect('/meetings')
     })
   }
+
+exports.search = function(req, res) {
+  var regex = new RegExp(req.query["term"], 'i');
+  var query = Meeting.find({
+    name: regex
+  }, {
+    'name': 1
+  }).sort({
+    "updated_at": -1
+  }).sort({
+    "created_at": -1
+  }).limit(20);
+
+  // Execute query in a callback and return users list
+  query.exec(function(err, meetings) {
+    if (!err) {
+      // Method to construct the json result set
+      var result = buildResultSet(meetings);
+      res.send(result, {
+        'Content-Type': 'application/json'
+      }, 200);
+    } else {
+      res.send(JSON.stringify(err), {
+        'Content-Type': 'application/json'
+      }, 404);
+    }
+
+  });
+
+}

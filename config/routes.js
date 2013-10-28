@@ -43,6 +43,7 @@ module.exports = function(app, passport) {
       failureFlash: 'Invalid email or password.'
     }), users.session)
   app.get('/users/:userId', users.show)
+  app.post('/users/:userId', users.update)
   app.get('/auth/github',
     passport.authenticate('github', {
       failureRedirect: '/login'
@@ -72,16 +73,12 @@ module.exports = function(app, passport) {
   app.get('/companies', companies.index)
   app.get('/companies/new', auth.requiresLogin, companies.new)
   app.post('/companies', auth.requiresLogin, companies.create)
-  app.get('/companies/:id', companies.show)
-  app.get('/companies/:id/edit', companyAuth, companies.edit)
-  app.put('/companies/:id', companyAuth, companies.update)
-  app.del('/companies/:id', companyAuth, companies.destroy)
-  // comment routes
-  var comments = require('../app/controllers/comments')
-  app.post('/companies/:id/comments', auth.requiresLogin, comments.create)
-  app.get('/companies/:id/comments', auth.requiresLogin, comments.create)
+  app.get('/companies/:companyId', companies.show)
+  app.get('/companies/:companyId/edit', companyAuth, companies.edit)
+  app.put('/companies/:companyId', companyAuth, companies.update)
+  app.del('/companies/:companyId', companyAuth, companies.destroy)
 
-  app.param('id', companies.load) // might have to adjust
+  app.param('companyId', companies.load) // might have to adjust
 
 
 
@@ -89,16 +86,16 @@ module.exports = function(app, passport) {
   app.get('/topics', topics.index)
   app.get('/topics/new', auth.requiresLogin, topics.new)
   app.post('/topics', auth.requiresLogin, topics.create)
-  app.get('/topics/:id', topics.show)
-  app.get('/topics/:id/edit', topicAuth, topics.edit)
-  app.put('/topics/:id', topicAuth, topics.update)
-  app.del('/topics/:id', topicAuth, topics.destroy)
+  app.get('/topics/:topicsId', topics.show)
+  app.get('/topics/:topicsId/edit', topicAuth, topics.edit)
+  app.put('/topics/:topicsId', topicAuth, topics.update)
+  app.del('/topics/:topicsId', topicAuth, topics.destroy)
   // comment routes
-  var comments = require('../app/controllers/comments')
-  app.post('/topics/:id/comments', auth.requiresLogin, comments.create)
-  app.get('/topics/:id/comments', auth.requiresLogin, comments.create)
+  var topicComments = require('../app/controllers/comments')
+  app.post('/topics/:topicsId/comments', auth.requiresLogin, topicComments.create)
+  app.get('/topics/:topicsId/comments', auth.requiresLogin, topicComments.create)
 
-  app.param('id', topics.load) // might have to adjust
+  app.param('topicsId', topics.load) // might have to adjust
 
   // agendas routes
   app.get('/agendas', agendas.index)
@@ -113,7 +110,7 @@ module.exports = function(app, passport) {
   app.post('/agendas/:id/comments', auth.requiresLogin, comments.create)
   app.get('/agendas/:id/comments', auth.requiresLogin, comments.create)
 
-  app.param('id', agendas.load) // might have to adjust
+  app.param('agendasId', agendas.load) // might have to adjust
 
   // home route
 
@@ -130,11 +127,13 @@ module.exports = function(app, passport) {
   app.post('/meetings/:id/comments', auth.requiresLogin, comments.create)
   app.get('/meetings/:id/comments', auth.requiresLogin, comments.create)
 
-  app.param('id', meetings.load) // might have to adjust
+  app.param('meetingsId', meetings.load) // might have to adjust
 
   // home route
-
-
+  app.get('/search/meeting', auth.requiresLogin, meetings.search)
+  app.get('/search/topic', auth.requiresLogin, topics.search)
+  app.get('/search/agenda', auth.requiresLogin, agendas.search)
+  app.get('/search/company', auth.requiresLogin, companies.search)
 
   // tag routes
   var tags = require('../app/controllers/tags')

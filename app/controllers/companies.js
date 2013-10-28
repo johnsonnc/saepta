@@ -4,6 +4,7 @@
 
 var mongoose = require('mongoose'),
   Company = mongoose.model('Company'),
+  User = mongoose.model('User'),
   utils = require('../../lib/utils'),
   _ = require('underscore')
 
@@ -12,7 +13,7 @@ var mongoose = require('mongoose'),
    */
 
   exports.load = function(req, res, next, id) {
-    var Company = mongoose.model('Company')
+    var User = mongoose.model('User')
 
     Company.load(id, function(err, company) {
       if (err) return next(err)
@@ -64,7 +65,7 @@ var mongoose = require('mongoose'),
 
   exports.create = function(req, res) {
     var company = new Company(req.body)
-    company.user = req.user
+    company.creator = req.user
 
     company.uploadAndSave(req.files.image, function(err) {
       if (!err) {
@@ -117,10 +118,14 @@ var mongoose = require('mongoose'),
    */
 
   exports.show = function(req, res) {
+
+    var User = mongoose.model('User')
     res.render('companies/show', {
       title: req.company.title,
       company: req.company
     })
+
+
   }
 
   /**
@@ -134,3 +139,46 @@ var mongoose = require('mongoose'),
       res.redirect('/companies')
     })
   }
+
+
+exports.search = function(req, res) {
+  var regex = new RegExp(req.query["term"], 'i');
+  var query = Company.find({
+    name: regex
+  }, {
+    'name': 1
+  }).sort({
+    "updated_at": -1
+  }).sort({
+    "created_at": -1
+  }).limit(20);
+
+  // Execute query in a callback and return users list
+  query.exec(function(err, companies) {
+    if (!err) {
+      // Method to construct the json result set
+      //var result = buildResultSet(companies);
+      var result = function(companies) {
+        var r = [];
+        for (var i = 0; i < companies.length; i = i + 1) {
+          r.push({
+            name: companies[0].name,
+            _id: companies[0]._id
+          })
+        }
+        return r; // may need to string.
+      }
+
+
+      res.send(result(companies), {
+        'Content-Type': 'application/json'
+      }, 200);
+    } else {
+      res.send(JSON.stringify(err), {
+        'Content-Type': 'application/json'
+      }, 404);
+    }
+
+  });
+
+}

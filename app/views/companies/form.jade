@@ -8,41 +8,36 @@ block main
 block content
   - var action = '/companies'
   - action += company.isNew? '' : '/' + company.id
+  if(req.user.company)
+    h2 Cannot create a company, you are already part of one.
+  else
+    .row
+      .span7
+        form.form-horizontal(method="post", action=action, enctype="multipart/form-data", role="form")
 
-  .row
-    .span7
-      form.form-horizontal(method="post", action=action, enctype="multipart/form-data")
+          input(type="hidden", name="_csrf", value="#{csrf_token}")
 
-        input(type="hidden", name="_csrf", value="#{csrf_token}")
+          - if (!company.isNew)
+            input(type="hidden", name="_method", value="PUT")
 
-        - if (!company.isNew)
-          input(type="hidden", name="_method", value="PUT")
+          .form-group
+            label.col-lg-2.control-label(for='name') Name
+            .col-lg-10
+              input#name.form-control(type='text', name="name", value=company.name, placeholder='Enter the name')
 
-        .control-group
-          label.control-label(for='title') Title
-          .controls
-            input#title.input-xlarge(type='text', name="title", value=company.title, placeholder='Enter the title')
+          .form-group
+            label.col-lg-2.control-label(for='members') Members
+            .col-lg-10
+              textarea#members.form-control(type='text', rows="5", name="body", placeholder='Enter the company members')=company.members
 
-        .control-group
-          label.control-label(for='file') Image
-          .controls
-            input#file(type='file', name="image[]")
+          .form-group
+            label.col-lg-2.control-label(for='tags') Tags
+            .col-lg-10
+              input#tags.form-control(type='text', name="tags", value=company.tags, placeholder='Enter the tags')
 
-        .control-group
-          label.control-label(for='desc') Body
-          .controls
-            textarea#desc.input-xlarge(type='text', rows="5", name="body", placeholder='Enter the company description')=company.body
+          .form-group
+            .col-lg-offset-2.col-lg-10
+            button.btn.btn-primary(type='submit') Save changes
+            &nbsp;
+            a.btn(href='/companies', title="cancel") Cancel
 
-        .control-group
-          label.control-label(for='tags') Tags
-          .controls
-            input#tags(type='text', name="tags", value=company.tags, placeholder='Enter the tags')
-
-        .form-actions
-          button.btn.btn-primary(type='submit') Save changes
-          &nbsp;
-          a.btn(href='/companies', title="cancel") Cancel
-
-    .span5
-      - if (!company.isNew && company.image && company.image.files && company.image.files.length)
-        img(src=company.image.cdnUri + "/mini_" + company.image.files[0])

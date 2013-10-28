@@ -1,41 +1,46 @@
 extends ../layouts/default
 
 block main
-  h1= company.title
+  h1= company.name
 
 block content
-  .row
-    .span9
-      p=company.body
+  if(!company.creator)
+   pre 
+    This company was not created correctly and cannot be displayed
+  else 
+    .container
+      
       .meta.muted
-        - if (company.user)
-          - var name = company.user.name ? company.user.name : company.user.username
-          p Author -&nbsp;
-            a(href="/users/"+company.user._id)= name
-        p.muted= formatDate(company.createdAt, "%b %d, %Y at %I:%M %p")
-        - if (company.tags)
-          .tags
-            - each tag in company.tags.split(',')
-              a.tag(href="/tags/"+tag)
-                i.icon-tags
-                |  #{tag}
+      dl.dl-horizontal
+        dt Created
+        dd= formatDate(company.createdAt, "%b %d, %Y at %I:%M %p")
+        dt Created By
+        dd= company.creator.name
+        dt Tags
+        dd
+          - if (company.tags)
+            .tags
+              - each tag in company.tags.split(',')
+                a.tag(href="/tags/"+tag)
+                  i.icon-tags
+                  |  #{tag}
+                &nbsp;&nbsp;
+        dt Members
+        dd
+          ul
+            if(company.members.length)
+             - each member in members 
+               li= member.name
+            else
+            li No current Memebers.
+        if(company.creator.id === req.user.id)
+          dd
+            br
+            form.form-horizontal.confirm(action="/companies/"+company.id, method="post")
+              input(type='hidden', name='_csrf', value="#{csrf_token}")
+              a.btn(href='/companies/'+company._id+'/edit', title="edit") Edit
               &nbsp;&nbsp;
-    .span3
-      - if (!company.isNew && company.image && company.image.files && company.image.files.length)
-        img(src=company.image.cdnUri + '/mini_' + company.image.files[0])
-
-  p
-    br
-    form.center.form-inline.confirm(action="/companies/"+company.id, method="post")
-      input(type='hidden', name='_csrf', value="#{csrf_token}")
-      a.btn(href='/companies/'+company._id+'/edit', title="edit") Edit
-      &nbsp;&nbsp;
-      input(type="hidden", name="_method", value="DELETE")
-      button.btn.btn-danger(type="submit") delete
-
-  p
-    br
-    h3 Comments
-    - each comment in company.comments
-      include ../comments/comment
-    include ../comments/form
+              input(type="hidden", name="_method", value="DELETE")
+              button.btn.btn-danger(type="submit") DELETE
+        else    
+          <p> You must be logged in as the owner to edit this company. </p>

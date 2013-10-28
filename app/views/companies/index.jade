@@ -8,8 +8,8 @@ block content
     - each company in companies
       .company
         h3
-          a(href='/companies/'+company._id, title=company.title) #{company.title}
-        p= company.body
+          a(href='/companies/'+company._id, title=company.name) #{company.name}
+        p= company.title
 
         .meta.muted
           span= formatDate(company.createdAt)
@@ -19,7 +19,7 @@ block content
 
             - var name = company.user.name ? company.user.name : company.user.username
 
-            a(href="/users/"+company.user._id)= name
+            a(href="/companies/"+company.user._id)= name
           &nbsp; - &nbsp;
           - if (company.tags)
             - each tag in company.tags.split(',')

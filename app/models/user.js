@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   crypto = require('crypto'),
   _ = require('underscore'),
-  authTypes = ['github', 'twitter', 'facebook', 'google', 'linkedin']
+  authTypes = ['github', 'google']
 
   /**
    * User Schema
@@ -18,8 +18,8 @@ var UserSchema = new Schema({
     default: ''
   },
   company: {
-    type: String,
-    default: ''
+    type: Schema.ObjectId,
+    ref: 'Company'
   },
   ownedAgenda: [{
     type: Schema.ObjectId,
@@ -192,6 +192,9 @@ UserSchema.methods = {
       return ''
     }
   }
+
+
+
 }
 
 mongoose.model('User', UserSchema)

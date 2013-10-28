@@ -4,7 +4,7 @@ body {
 
 .container {
   width: auto;
-  max-width: 680px;
+  max-width: 1000px;
 }
 
 .article, .comment {
@@ -20,4 +20,45 @@ body {
 .form-actions {
   background: #fff;
   border: 0;
+}
+
+.modal-backdrop{
+	background: rgba(15,51,64,0.95);
+
+}
+
+
+.modal-body{
+width: 100%;
+background-color:rgba(243,205,96,1);
+position: relative;
+float: left;
+
+}
+.modal-footer{
+	width: 100%;
+position: relative;
+float: left;
+max-height: 90%;
+margin-top:0px;
+background-color:rgba(243,205,96,1);
+}
+
+.bootbox.modal {
+
+display: block;
+position: absolute;
+width: 400px;
+max-height: 100%;
+right:auto;
+bottom:auto;
+margin-left: -200px;
+top: 50%;
+left: 50%;
+overflow-y: hidden;
+
+  -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
 }

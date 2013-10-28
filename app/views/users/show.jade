@@ -3,3 +3,30 @@ extends ../layouts/default
 block main
   - var name = user.name ? user.name : user.username
   h1= name
+
+block content
+    h3 Current Information
+    dl.dl-horizontal
+        dt Company
+        dd= user.company.name
+        dt Authenticating
+        dd= user.provider
+        dt Agenda Count 
+        dd= user.ownedAgenda.length
+        dt Meeting Count
+        dd=user.ownedMeeting.length
+        dt Topic Count
+        dd= user.ownedTopic.length
+    content
+        h3 Settings
+        form.form-horizontal#companyUpdate(action="/users/"+user._id, method="post")
+          input(type='hidden', name='_csrf', value="#{csrf_token}")
+            
+          .form-group
+            label.col-lg-2.control-label(for='company-query') Company Name
+            .col-lg-10
+              input#company-query.form-control(type='text', name="companyName", placeholder='Company', value=user.company.name)
+              input#companyId(type='hidden', name='companyId')
+          .form-actions
+            button.btn.btn-primary(type='submit') Update
+             

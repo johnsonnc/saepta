@@ -30,36 +30,41 @@ exports.user = {
 
 exports.agenda = {
   hasAuthorization: function(req, res, next) {
-    if (req.agenda.user.id != req.user.id) {
+    if (req.meeting.user.id != req.user.id) {
       req.flash('info', 'You are not authorized')
-      return res.redirect('/agenda/' + req.agenda.id)
+      return res.redirect('/agendas/' + req.agenda.id)
     }
     next()
   }
 }
 exports.meeting = {
   hasAuthorization: function(req, res, next) {
-    if (req.agenda.user.id != req.user.id) {
+    if (req.meeting.creator.id != req.user.id) {
       req.flash('info', 'You are not authorized')
-      return res.redirect('/meeting/' + req.agenda.id)
+      return res.redirect('/meetings/' + req.meeting.id)
     }
     next()
   }
 }
 exports.company = {
   hasAuthorization: function(req, res, next) {
-    if (req.agenda.user.id != req.user.id) {
-      req.flash('info', 'You are not authorized')
-      return res.redirect('/company/' + req.agenda.id)
+    if (req.company.creator !== undefined && req.company.creator !== null) {
+      if (req.company.creator.id != req.user.id) {
+        req.flash('info', 'You are not authorized')
+        return res.redirect('/companies/' + req.company.id)
+      }
+    } else {
+      req.flash('info', 'Cannot verify your identy.')
+      return res.redirect('/companies/' + req.company.id)
     }
     next()
   }
 }
 exports.topic = {
   hasAuthorization: function(req, res, next) {
-    if (req.agenda.user.id != req.user.id) {
+    if (req.meeting.creator.id != req.user.id) {
       req.flash('info', 'You are not authorized')
-      return res.redirect('/topic/' + req.agenda.id)
+      return res.redirect('/topics/' + req.topic.id)
     }
     next()
   }

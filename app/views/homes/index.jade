@@ -1,12 +1,19 @@
 extends ../layouts/default
 
-block main
-  h1= title
 
-block content
-  #intro 
-    <i>Welcome To Saepta!</i>
+block content 
+    h1= title
+    .jumbotron(style="background-color: rgba(140,190,178,1)")
+        .container
+            <h1>Agenda's on Steriods!</h1>
+            <p>Why not make meetings more productive, consise, while keeping track of input?<br />Now you can, with Saepta.</p>
+            <a class="btn btn-primary btn-lg">Learn more</a>
 
-  #introBody
-    p
-      Saeptal bridges the gap between meetings, agendas, and collaboration.
+    .jumbotron
+        .container
+            <h1>Meet Smart!</h1>
+            <p>Want to know what is important to your audience before you meet? 
+            Weither it is a small team or many customers, sense their needs before the meeting.
+            The more you know the better prepared you can be.
+            Ignore the fluff, address the need!
+            <p><a class="btn btn-primary btn-lg">Introducing Agenda Rankings</a></p>

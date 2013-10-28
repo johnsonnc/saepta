@@ -1,11 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
   // confirmations
-  $('.confirm').submit(function (e) {
+  $('.confirm').submit(function(e) {
     e.preventDefault();
     var self = this;
     var msg = 'Are you sure?';
-    bootbox.confirm(msg, 'cancel', 'Yes! I am sure', function (action) {
+    bootbox.confirm(msg, 'Cancel', 'Yes! I am sure', function(action) {
       if (action) {
         $(self).unbind('submit');
         $(self).trigger('submit');
@@ -14,8 +14,8 @@ $(document).ready(function () {
   });
 
   $('#tags').tagsInput({
-    'height':'60px',
-    'width':'280px'
+    'height': '60px',
+    'width': '280px'
   });
 
 });

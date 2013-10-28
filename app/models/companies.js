@@ -35,11 +35,10 @@ var CompanySchema = new Schema({
     default: '',
     trim: true
   },
-  body: {
-    type: String,
-    default: '',
-    trim: true
-  },
+  members: [{
+    type: Schema.ObjectId,
+    ref: 'User'
+  }],
   creator: {
     type: Schema.ObjectId,
     ref: 'User'
@@ -62,24 +61,24 @@ var CompanySchema = new Schema({
 CompanySchema.path('name').validate(function(name) {
   return name.length > 0
 }, 'Company name cannot be blank')
-
+/*
 CompanySchema.path('body').validate(function(body) {
   return body.length > 0
 }, 'Company body cannot be blank')
-
+*/
 /**
  * Pre-remove hook
  */
 
 CompanySchema.pre('remove', function(next) {
-  var imager = new Imager(imagerConfig, 'S3')
+  /*  var imager = new Imager(imagerConfig, 'S3')
   var files = this.image.files
 
   // if there are files associated with the item, remove from the cloud too
   imager.remove(files, function(err) {
     if (err) return next(err)
   }, 'company')
-
+*/
   next()
 })
 
@@ -100,7 +99,7 @@ CompanySchema.methods = {
   uploadAndSave: function(images, cb) {
     this.save(cb)
 
-  },
+  }
 
   /**
    * Add comment
@@ -111,7 +110,7 @@ CompanySchema.methods = {
    * @api private
    */
 
-  addComment: function(user, comment, cb) {
+  /*  addComment: function(user, comment, cb) {
     var notify = require('../mailer/notify')
 
     this.comments.push({
@@ -127,7 +126,7 @@ CompanySchema.methods = {
 
     this.save(cb)
   }
-
+*/
 }
 
 /**
@@ -144,12 +143,12 @@ CompanySchema.statics = {
    * @api private
    */
 
-  load: function(id, cb) {
+  load: function(companyId, cb) {
     this.findOne({
-      _id: id
+      _id: companyId
     })
-      .populate('user', 'name email username')
-      .populate('comments.user')
+      .populate('creator', 'name email id') // may need to adjust for _id
+    .populate('members', 'name email id')
       .exec(cb)
   },
 
@@ -165,7 +164,7 @@ CompanySchema.statics = {
     var criteria = options.criteria || {}
 
     this.find(criteria)
-      .populate('user', 'name username')
+      .populate('creator', 'name email id')
       .sort({
         'createdAt': -1
       }) // sort by date
