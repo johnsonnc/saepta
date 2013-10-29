@@ -4,25 +4,28 @@ block main
   h1= title
 
 block content
-  - if (articles.length)
-    - each article in articles
-      .article
+  - if (meetings.length)
+    - each meeting in meetings
+      .meeting
         h3
-          a(href='/articles/'+article._id, title=article.title) #{article.title}
-        p= article.body
+          a(href='/meetings/'+meeting._id, title=meeting.title) #{meeting.title}
+        p= meeting.details
 
         .meta.muted
-          span= formatDate(article.createdAt)
+          span= formatDate(meeting.createdAt)
           &nbsp; - &nbsp;
-          - if (article.user)
-            span Author &nbsp;
+          - if (meeting.creator)
+            span Creator &nbsp;
 
-            - var name = article.user.name ? article.user.name : article.user.username
+            - var name = meeting.creator.name ? meeting.creator.name : meeting.creator.username
 
-            a(href="/users/"+article.user._id)= name
+            a(href="/users/"+meeting.creator._id)= name
           &nbsp; - &nbsp;
-          - if (article.tags)
-            - each tag in article.tags.split(',')
+          span Starts @ #{moment(meeting.startDate).format("YYYY-MM-DD HH:mm")} &nbsp;
+          span Attendees # - &nbsp;
+          span Topics # - &nbsp;
+          - if (meeting.tags)
+            - each tag in meeting.tags.split(',')
               &nbsp;
               a.tag(href="/tags/"+tag)
                 i.icon-tags
@@ -33,5 +36,5 @@ block content
         ul
           != createPagination(pages, page)
   - else
-    p.muted No articles.&nbsp;
-      a(href="/articles/new") create one
+    p.muted No meetings.&nbsp;
+      a(href="/meetings/new") create one

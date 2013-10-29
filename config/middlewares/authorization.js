@@ -30,7 +30,7 @@ exports.user = {
 
 exports.agenda = {
   hasAuthorization: function(req, res, next) {
-    if (req.meeting.user.id != req.user.id) {
+    if (req.agenda.creator.id != req.user.id) {
       req.flash('info', 'You are not authorized')
       return res.redirect('/agendas/' + req.agenda.id)
     }

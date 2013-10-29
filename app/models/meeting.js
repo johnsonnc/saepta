@@ -48,6 +48,13 @@ var MeetingSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Company'
   },
+  startDate: {
+    type: Date
+  },
+  agenda: {
+    type: Schema.ObjectId,
+    ref: 'Agenda'
+  },
 
   comments: [{
     body: {
@@ -175,9 +182,9 @@ MeetingSchema.statics = {
     this.findOne({
       _id: id
     })
-      .populate('user', 'name email username')
-      .populate('comments.user')
-      .exec(cb)
+      .populate('creator', 'name email username')
+
+    .exec(cb)
   },
 
   /**
@@ -192,7 +199,7 @@ MeetingSchema.statics = {
     var criteria = options.criteria || {}
 
     this.find(criteria)
-      .populate('user', 'name username')
+      .populate('creator', 'name email username')
       .sort({
         'createdAt': -1
       }) // sort by date

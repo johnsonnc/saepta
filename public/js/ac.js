@@ -156,4 +156,36 @@ $(function() {
       }
    });
 
+
+   $(".form-datetime").datetimepicker({
+      format: "dd MM yyyy @ hh:ii",
+      autoclose: true,
+      todayBtn: true,
+      startDate: new Date().toUTCString(),
+      minuteStep: 5
+   });
+
+   $(".formDateClose").datetimepicker({
+      format: "dd MM yyyy @ hh:ii",
+      autoclose: true,
+      todayBtn: true,
+      startDate: new Date().toUTCString(),
+      minuteStep: 5
+   });
+
+   $(".formDateOpen").datetimepicker({
+      format: "dd MM yyyy @ hh:ii",
+      autoclose: true,
+      todayBtn: true,
+      startDate: new Date().toUTCString(),
+      minuteStep: 5
+   });
+
+   $(".formDateQuorum").datetimepicker({
+      format: "dd MM yyyy @ hh:ii",
+      autoclose: true,
+      todayBtn: true,
+      startDate: new Date().toUTCString(),
+      minuteStep: 5
+   });
 });

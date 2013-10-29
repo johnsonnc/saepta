@@ -35,12 +35,16 @@ var AgendaSchema = new Schema({
     default: '',
     trim: true
   },
-  body: {
+  objective: {
     type: String,
     default: '',
     trim: true
   },
   creator: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
+  host: {
     type: Schema.ObjectId,
     ref: 'User'
   },
@@ -64,16 +68,16 @@ var AgendaSchema = new Schema({
     set: setTags
   },
   dateOpen: {
-    type: Date,
-    default: Date.now
+    type: Date
+
   },
   dateClose: {
-    type: Date,
-    default: Date.now
+    type: Date
+
   },
   dateQuorum: {
-    type: Date,
-    default: Date.now
+    type: Date
+
   },
   createdAt: {
     type: Date,
@@ -93,8 +97,8 @@ AgendaSchema.path('title').validate(function(title) {
   return title.length > 0
 }, 'Agenda title cannot be blank')
 
-AgendaSchema.path('body').validate(function(body) {
-  return body.length > 0
+AgendaSchema.path('objective').validate(function(objective) {
+  return objective.length > 0
 }, 'Agenda body cannot be blank')
 
 /**
@@ -108,7 +112,7 @@ AgendaSchema.pre('remove', function(next) {
   // if there are files associated with the item, remove from the cloud too
   imager.remove(files, function(err) {
     if (err) return next(err)
-  }, 'Agenda')
+  }, 'agenda')
 
   next()
 })
@@ -128,17 +132,8 @@ AgendaSchema.methods = {
    */
 
   uploadAndSave: function(images, cb) {
-    /* if (!images || !images.length) return this.save(cb)
 
-    var imager = new Imager(imagerConfig, 'S3')
-    var self = this
-
-    imager.upload(images, function (err, cdnUri, files) {
-      if (err) return cb(err)
-      if (files.length) {
-        self.image = { cdnUri : cdnUri, files : files }
-      }*/
-    self.save(cb)
+    this.save(cb)
   },
 
   /**
@@ -187,8 +182,7 @@ AgendaSchema.statics = {
     this.findOne({
       _id: id
     })
-      .populate('user', 'name email username')
-      .populate('comments.user')
+      .populate('creator', 'name email username')
       .exec(cb)
   },
 
@@ -204,7 +198,7 @@ AgendaSchema.statics = {
     var criteria = options.criteria || {}
 
     this.find(criteria)
-      .populate('user', 'name username')
+      .populate('creator', 'name username')
       .sort({
         'createdAt': -1
       }) // sort by date

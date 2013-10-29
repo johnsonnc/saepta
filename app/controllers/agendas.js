@@ -13,6 +13,7 @@ var mongoose = require('mongoose'),
 
   exports.load = function(req, res, next, id) {
     var User = mongoose.model('User')
+    agenda.creator = req.user
 
     Agenda.load(id, function(err, agenda) {
       if (err) return next(err)
@@ -64,7 +65,7 @@ var mongoose = require('mongoose'),
 
   exports.create = function(req, res) {
     var agenda = new Agenda(req.body)
-    agenda.user = req.user
+    agenda.creator = req.user
 
     agenda.uploadAndSave(req.files.image, function(err) {
       if (!err) {
@@ -134,6 +135,7 @@ var mongoose = require('mongoose'),
       res.redirect('/agendas')
     })
   }
+
 exports.search = function(req, res) {
   var regex = new RegExp(req.query["term"], 'i');
   var query = Agenda.find({

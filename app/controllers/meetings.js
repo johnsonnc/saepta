@@ -65,7 +65,7 @@ var mongoose = require('mongoose'),
 
   exports.create = function(req, res) {
     var meeting = new Meeting(req.body)
-    meeting.user = req.user
+    meeting.creator = req.user
 
     meeting.uploadAndSave(req.files.image, function(err) {
       if (!err) {
@@ -118,6 +118,7 @@ var mongoose = require('mongoose'),
    */
 
   exports.show = function(req, res) {
+    var User = mongoose.model('User')
     res.render('meetings/show', {
       title: req.meeting.title,
       meeting: req.meeting

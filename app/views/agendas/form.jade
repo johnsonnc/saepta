@@ -6,43 +6,66 @@ block main
   hr
 
 block content
-  - var action = '/articles'
-  - action += article.isNew? '' : '/' + article.id
+  - var action = '/agendas'
+  - action += agenda.isNew? '' : '/' + agenda.id
 
   .row
     .span7
-      form.form-horizontal(method="post", action=action, enctype="multipart/form-data")
+      form.form-horizontal(method="post", action=action, enctype="multipart/form-data", role="form")
 
         input(type="hidden", name="_csrf", value="#{csrf_token}")
 
-        - if (!article.isNew)
+        - if (!agenda.isNew)
           input(type="hidden", name="_method", value="PUT")
 
-        .control-group
-          label.control-label(for='title') Title
-          .controls
-            input#title.input-xlarge(type='text', name="title", value=article.title, placeholder='Enter the title')
+        .form-group
+          label.col-lg-2.control-label(for='title') Title
+          .col-lg-10
+            input#title.form-control(type='text', name="title", value=agenda.title, placeholder='Enter the title')
 
-        .control-group
-          label.control-label(for='file') Image
-          .controls
-            input#file(type='file', name="image[]")
+      
+        .form-group
+          label.col-lg-2.control-label(for='objective') Objective
+          .col-lg-10
+            textarea#objective.form-control(type='text', rows="5", name="objective", placeholder='Enter the agenda objective')= agenda.objective
 
-        .control-group
-          label.control-label(for='desc') Body
-          .controls
-            textarea#desc.input-xlarge(type='text', rows="5", name="body", placeholder='Enter the article description')=article.body
+        .form-group
+          label.col-lg-2.control-label(for='host') Host
+          .col-lg-10
+            input#host.form-control(type='text', rows="5", name="host", placeholder='Enter the hosts email')= agenda.host
 
-        .control-group
-          label.control-label(for='tags') Tags
-          .controls
-            input#tags(type='text', name="tags", value=article.tags, placeholder='Enter the tags')
+        .form-group
+          label.col-lg-2.control-label(for='dateOpen') Date agenda opens for review
+          .col-lg-10
+            .input-append.date.formDateOpen
+                input#dateOpen.form-control(type='text', name="dateOpen", size=16, readonly, value=agenda.dateOpen, placeholder='Enter the Open Date')
+                span.add-on <i class="icon-remove"></i>
+                span.add-on <i class="icon-calendar"></i>
 
-        .form-actions
-          button.btn.btn-primary(type='submit') Save changes
-          &nbsp;
-          a.btn(href='/articles', title="cancel") Cancel
+        .form-group
+          label.col-lg-2.control-label(for='dateClose') Date agenda closes for review
+          .col-lg-10
+            .input-append.date.formDateClose
+                input#dateClose.form-control(type='text', name="dateClose", size=16, readonly, value=agenda.dateClose, placeholder='Enter the Close Date')
+                span.add-on <i class="icon-remove"></i>
+                span.add-on <i class="icon-calendar"></i>
 
-    .span5
-      - if (!article.isNew && article.image && article.image.files && article.image.files.length)
-        img(src=article.image.cdnUri + "/mini_" + article.image.files[0])
+        .form-group
+          label.col-lg-2.control-label(for='dateQuorum') Date agenda quorum for review
+          .col-lg-10
+            .input-append.date.formDateQuorum
+                input#dateQuorum.form-control(type='text', name="dateQuorum", size=16, readonly, value=agenda.dateQuorum, placeholder='Enter the Quorum Date')
+                span.add-on <i class="icon-remove"></i>
+                span.add-on <i class="icon-calendar"></i>
+
+        .form-group
+          label.col-lg-2.control-label(for='tags') Tags
+          .col-lg-10
+            input#tags.form-control(type='text', name="tags", value=agenda.tags, placeholder='Enter the tags')
+
+        .form-group
+            label.col-lg-2.control-label
+            .col-lg-10
+              button.btn.btn-primary(type='submit') Save changes
+              &nbsp;
+              b.btn(href='/agendas', title="cancel") Cancel

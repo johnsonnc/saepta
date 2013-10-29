@@ -86,16 +86,16 @@ module.exports = function(app, passport) {
   app.get('/topics', topics.index)
   app.get('/topics/new', auth.requiresLogin, topics.new)
   app.post('/topics', auth.requiresLogin, topics.create)
-  app.get('/topics/:topicsId', topics.show)
-  app.get('/topics/:topicsId/edit', topicAuth, topics.edit)
-  app.put('/topics/:topicsId', topicAuth, topics.update)
-  app.del('/topics/:topicsId', topicAuth, topics.destroy)
+  app.get('/topics/:topicId', topics.show)
+  app.get('/topics/:topicId/edit', topicAuth, topics.edit)
+  app.put('/topics/:topicId', topicAuth, topics.update)
+  app.del('/topics/:topicId', topicAuth, topics.destroy)
   // comment routes
   var topicComments = require('../app/controllers/comments')
-  app.post('/topics/:topicsId/comments', auth.requiresLogin, topicComments.create)
-  app.get('/topics/:topicsId/comments', auth.requiresLogin, topicComments.create)
+  app.post('/topics/:topicId/comments', auth.requiresLogin, topicComments.create)
+  app.get('/topics/:topicId/comments', auth.requiresLogin, topicComments.create)
 
-  app.param('topicsId', topics.load) // might have to adjust
+  app.param('topicId', topics.load) // might have to adjust
 
   // agendas routes
   app.get('/agendas', agendas.index)
@@ -110,7 +110,7 @@ module.exports = function(app, passport) {
   app.post('/agendas/:id/comments', auth.requiresLogin, comments.create)
   app.get('/agendas/:id/comments', auth.requiresLogin, comments.create)
 
-  app.param('agendasId', agendas.load) // might have to adjust
+  app.param('agendaId', agendas.load) // might have to adjust
 
   // home route
 
@@ -118,16 +118,16 @@ module.exports = function(app, passport) {
   app.get('/meetings', meetings.index)
   app.get('/meetings/new', auth.requiresLogin, meetings.new)
   app.post('/meetings', auth.requiresLogin, meetings.create)
-  app.get('/meetings/:id', meetings.show)
-  app.get('/meetings/:id/edit', meetingAuth, meetings.edit)
-  app.put('/meetings/:id', meetingAuth, meetings.update)
-  app.del('/meetings/:id', meetingAuth, meetings.destroy)
+  app.get('/meetings/:meetingId', meetings.show)
+  app.get('/meetings/:meetingId/edit', meetingAuth, meetings.edit)
+  app.put('/meetings/:meetingId', meetingAuth, meetings.update)
+  app.del('/meetings/:meetingId', meetingAuth, meetings.destroy)
   // comment routes
   var comments = require('../app/controllers/comments')
-  app.post('/meetings/:id/comments', auth.requiresLogin, comments.create)
-  app.get('/meetings/:id/comments', auth.requiresLogin, comments.create)
+  app.post('/meetings/:meetingId/comments', auth.requiresLogin, comments.create)
+  app.get('/meetings/:meetingId/comments', auth.requiresLogin, comments.create)
 
-  app.param('meetingsId', meetings.load) // might have to adjust
+  app.param('meetingId', meetings.load) // might have to adjust
 
   // home route
   app.get('/search/meeting', auth.requiresLogin, meetings.search)

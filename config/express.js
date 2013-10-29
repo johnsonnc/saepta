@@ -6,7 +6,8 @@ var express = require('express'),
   mongoStore = require('connect-mongo')(express),
   flash = require('connect-flash'),
   helpers = require('view-helpers'),
-  pkg = require('../package.json')
+  pkg = require('../package.json'),
+  moment = require('moment')
 
   module.exports = function(app, config, passport) {
 

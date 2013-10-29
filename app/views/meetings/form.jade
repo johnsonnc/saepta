@@ -19,22 +19,43 @@ block content
             input(type="hidden", name="_method", value="PUT")
 
           .form-group
-            label.clo-lg-2.control-label(for='title') Title
+            label.col-lg-2.control-label(for='title') Title
             .col-lg-10
               input#title.form-control(type='text', name="title", value=meeting.title, placeholder='Enter the title')
 
-        
-          .control-group
-            label.control-label(for='desc') Body
-            .controls
-              textarea#desc.input-xlarge(type='text', rows="5", name="body", placeholder='Enter the meeting description')=meeting.body
+          
+          .form-group
+            label.col-lg-2.control-label(for='startDate') Start Date/Time
+            .col-lg-10
+              .input-append.date.form-datetime(data-date= new Date().now)
+                input#startDate.form-control(type='text', name="startDate", size=16, readonly, value=meeting.startDate, placeholder='Enter the Start Date')
+                span.add-on <i class="icon-remove"></i>
+                span.add-on <i class="icon-calendar"></i>
 
-          .control-group
-            label.control-label(for='tags') Tags
-            .controls
+          .form-group
+            label.col-lg-2.control-label(for='details') Details
+            .col-lg-10
+              textarea#details.form-control(type='text', rows="5", name="details", placeholder='Enter the meeting description')=meeting.details
+
+          .form-group
+            label.col-lg-2.control-label(for='invitees') Invite Attendees
+            .col-lg-10
+              textarea#invitees.form-control(type='text', rows="5", name="body", placeholder='Invite people')=meeting.invitees
+
+          .form-group
+            label.col-lg-2.control-label(for='confirmed') Attendees Confirmed
+            .col-lg-10
+              textarea#confirmed.form-control(type='text', rows="5", name="body", placeholder='People Who have accepted')=meeting.confirmed
+
+          .form-group
+            label.col-lg-2.control-label(for='tags') Tags
+            .col-lg-10
               input#tags(type='text', name="tags", value=meeting.tags, placeholder='Enter the tags')
 
-          .form-actions
-            button.btn.btn-primary(type='submit') Save changes
-            &nbsp;
-            a.btn(href='/meetings', title="cancel") Cancel
+        
+          .form-group
+            label.col-lg-2.control-label
+            .col-lg-10
+              button.btn.btn-primary(type='submit') Save changes
+              &nbsp;
+              a.btn(href='/meetings', title="cancel") Cancel
