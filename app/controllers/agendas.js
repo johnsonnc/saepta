@@ -4,6 +4,7 @@
 
 var mongoose = require('mongoose'),
   Agenda = mongoose.model('Agenda'),
+  Topic = mongoose.model('Topic'),
   utils = require('../../lib/utils'),
   _ = require('underscore')
 
@@ -164,4 +165,33 @@ exports.search = function(req, res) {
 
   });
 
+}
+
+exports.getTopics = function(req, res) {
+  var regex = new RegExp(req.query["term"], 'i');
+  var query = Topic.find({
+    name: regex
+  }, {
+    'name': 1
+  }).sort({
+    "updated_at": -1
+  }).sort({
+    "created_at": -1
+  }).limit(20);
+
+  // Execute query in a callback and return users list
+  query.exec(function(err, topics) {
+    if (!err) {
+      // Method to construct the json result set
+      var result = buildResultSet(topics);
+      res.send(result, {
+        'Content-Type': 'application/json'
+      }, 200);
+    } else {
+      res.send(JSON.stringify(err), {
+        'Content-Type': 'application/json'
+      }, 404);
+    }
+
+  });
 }

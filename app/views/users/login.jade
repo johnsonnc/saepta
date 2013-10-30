@@ -16,8 +16,10 @@ block auth
       .col-lg-10
         input.form-control#password(type='password', name="password", placeholder='Password')
 
-    .form-actions
-      button.btn.btn-primary(type='submit') Login
-      &nbsp;
-      | or&nbsp;
-      a.show-signup(href="/signup") sign up
+    .form-group
+      label.col-lg-2
+      .col-lg-10
+        button.btn.btn-primary(type='submit') Login
+        &nbsp;
+        | or&nbsp;
+        a.show-signup(href="/signup") sign up
