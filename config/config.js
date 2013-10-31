@@ -14,7 +14,7 @@ var path = require('path'),
 
 module.exports = {
   development: {
-    db: 'mongodb://localhost/db',
+    db: 'mongodb://nodejitsu:dfab79f65d227c009135a5c83ca3602b@paulo.mongohq.com:10070/nodejitsudb547154699',
     root: rootPath,
     notifier: notifier,
     app: {
@@ -23,16 +23,16 @@ module.exports = {
     github: {
       clientID: '8fd0370305d18f1dd1e5',
       clientSecret: '0670f7f36285177f2c4b1650ed83ace77d340b76',
-      callbackURL: 'http://local.host:3000/auth/github/callback'
+      callbackURL: 'http://saepta.jit.su/auth/github/callback'
     },
     google: {
       clientID: "158395802212.apps.googleusercontent.com",
       clientSecret: "AFWQ_OMjQDPdiOJJ5ZmMJqaU",
-      callbackURL: "http://localhost:3000/auth/google/callback"
+      callbackURL: "http://saepta.jit.su/auth/google/callback"
     }
   },
   test: {
-    db: 'mongodb://localhost/dbtest',
+    db: 'mongodb://nodejitsu:dfab79f65d227c009135a5c83ca3602b@paulo.mongohq.com:10070/nodejitsudb547154699',
     root: rootPath,
     notifier: notifier,
     app: {
@@ -41,16 +41,16 @@ module.exports = {
     github: {
       clientID: '8fd0370305d18f1dd1e5',
       clientSecret: '0670f7f36285177f2c4b1650ed83ace77d340b76',
-      callbackURL: 'http://localhost:3000/auth/github/callback'
+      callbackURL: 'http://saepta.jit.su/auth/github/callback'
     },
     google: {
       clientID: "158395802212.apps.googleusercontent.com",
       clientSecret: "AFWQ_OMjQDPdiOJJ5ZmMJqaU",
-      callbackURL: "http://localhost:3000/auth/google/callback"
+      callbackURL: "http://saepta.jit.su/auth/google/callback"
     }
   },
   production: {
-    db: 'mongodb://localhost/db',
+    db: 'mongodb://nodejitsu:dfab79f65d227c009135a5c83ca3602b@paulo.mongohq.com:10070/nodejitsudb547154699',
     root: rootPath,
     notifier: notifier,
     app: {
@@ -59,12 +59,12 @@ module.exports = {
     github: {
       clientID: '8fd0370305d18f1dd1e5',
       clientSecret: '0670f7f36285177f2c4b1650ed83ace77d340b76',
-      callbackURL: 'http://saetpaapp.com/auth/github/callback'
+      callbackURL: 'http://saepta.jit.su/auth/github/callback'
     },
     google: {
       clientID: "158395802212.apps.googleusercontent.com",
       clientSecret: "AFWQ_OMjQDPdiOJJ5ZmMJqaU",
-      callbackURL: "http://saetpaapp.com/auth/google/callback"
+      callbackURL: "http://saepta.jit.su/auth/google/callback"
     }
   }
 }

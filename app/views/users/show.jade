@@ -8,7 +8,10 @@ block content
     h3 Current Information
     dl.dl-horizontal
         dt Company
-        dd= user.company.name
+        - if(user.company)
+            dd= user.company.name
+          else
+            dd.panel-warning You have no company assigned
         dt Authenticating
         dd= user.provider
         dt Agenda Count 
@@ -19,13 +22,13 @@ block content
         dd= user.ownedTopic.length
     content
         h3 Settings
-        form.form-horizontal#companyUpdate(action="/users/"+user._id, method="post")
+        form.form-horizontal#companyUpdate(action="/users/"+user.id, method="post")
           input(type='hidden', name='_csrf', value="#{csrf_token}")
             
           .form-group
             label.col-lg-2.control-label(for='company-query') Company Name
             .col-lg-10
-              input#company-query.form-control(type='text', name="companyName", placeholder='Company', value=user.company.name)
+              input#company-query.form-control(type='text', name="companyName", placeholder='Company')
               input#companyId(type='hidden', name='companyId')
           
           .form-group
