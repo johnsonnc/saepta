@@ -1,0 +1,40 @@
+{
+  "Users":[{
+    "_id": ObjectId,
+    "username": String,
+    "password": String,
+    "firstName": String,
+    "lastName": String,
+    "company":String
+    "owns" : [],
+    "edits":[],
+    "views": [],
+    "invites":[],
+    "createdOn": Date,
+    "status": String
+  }],
+  "Meetings":[{
+    "_id":ObjectId,
+    "creator": Users._id,
+    "invitees":[Users._id],
+    "owner":Users._id,
+    "startTime":Date,
+    "endTime":Date,
+    "createTime":Date,
+    "repeat":Boolean,
+    "agendas":[Agendas._id],
+    "type": String,
+    "details": String
+  }],
+  "Agendas":[{
+    "_id":ObjectId,
+    "creator": Users._id,
+    "owner":Users._id,
+    "editors":[Users._id],
+    "items":[
+      {Items._id}
+    ],
+  }],
+  "Items":[{}]
+  
+}
