@@ -5,7 +5,7 @@
     "password": String,
     "firstName": String,
     "lastName": String,
-    "company":String
+    "company":String,
     "owns" : [],
     "edits":[],
     "views": [],
@@ -24,7 +24,8 @@
     "repeat":Boolean,
     "agendas":[Agendas._id],
     "type": String,
-    "details": String
+    "details": String,
+    "comments": Comments
   }],
   "Agendas":[{
     "_id":ObjectId,
@@ -32,9 +33,29 @@
     "owner":Users._id,
     "editors":[Users._id],
     "items":[
-      {Items._id}
+      {"Item_id":Items._id,
+      "closed":Boolean,
+      "countUp":Integer,
+      "countDown":Integer,
+      "order":Integer}
     ],
+    "comments": Comments
   }],
-  "Items":[{}]
+  "Items":[{
+    "_id":ObjectId,
+    "creator": Users._id,
+    "owner": Users._id,
+    "body":String,
+    "title":String,
+    "buttonUp":String,
+    "buttonDown":String,
+    "media": Binary,
+    "comments":{
+      "_id":ObjectId,
+      "author":Users._id,
+      "body": String,
+      "creationTime":Date
+    }
+  }]
   
 }
